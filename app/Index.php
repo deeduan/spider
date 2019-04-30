@@ -40,8 +40,7 @@ class Index
         ];
         // 元数据采集规则
         $rules = [
-            'sign' => ['.s-result-item', 'data-asin'],
-            'sign1' => ['div[data-asin]', 'data-asin']
+            'sign' => ['.s-result-item', 'data-asin']
         ];
         // 切片选择器
         $range = '.s-result-list:eq(0)';
@@ -77,10 +76,16 @@ class Index
 
 }
 
-$spider = new Index();
+require_once '../vendor/autoload.php';
 
-//$data = $spider->getData();
-//$data = $spider->formatAmazonUrl();
-$data = $spider->getProductPosition();
+$range = '.s-result-list:eq(0)';
+$data = QueryList::get('https://www.amazon.com/s?k=baby+sleep+sound+machine&page=2&ref=sr_pg_2')
+    // 设置采集规则
+    ->range($range)->
+    rules([
+        'sign' => ['.s-result-item', 'data-asin'],
+        'title' => array('h2','text')
+    ])
+    ->queryData();
 
-var_dump($data);
+print_r($data);
