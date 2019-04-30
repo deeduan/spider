@@ -78,14 +78,18 @@ class Index
 
 require_once '../vendor/autoload.php';
 
-$range = '.s-result-list:eq(0)';
+//$range = '.s-result-list';
+$range = '.s-result-list>div';
 $data = QueryList::get('https://www.amazon.com/s?k=baby+sleep+sound+machine&page=2&ref=sr_pg_2')
     // 设置采集规则
     ->rules([
         'sign' => ['.s-result-item', 'data-asin'],
-        'sign_index' => ['.s-result-item', 'data-index'],
-        'url' => array('h2>a','href'),
-    ])
+        'sign_index' => ['.s-result-item', 'data-index']
+    ])->range($range)
     ->queryData();
 
-print_r($data);
+if (file_exists('./duan')) {
+    unlink('./duan');
+}
+
+file_put_contents('./duan', json_encode($data));
