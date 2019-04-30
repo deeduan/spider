@@ -81,10 +81,10 @@ require_once '../vendor/autoload.php';
 $range = '.s-result-list:eq(0)';
 $data = QueryList::get('https://www.amazon.com/s?k=baby+sleep+sound+machine&page=2&ref=sr_pg_2')
     // 设置采集规则
-    ->range($range)->
-    rules([
+    ->rules([
         'sign' => ['.s-result-item', 'data-asin'],
-        'title' => array('h2','text')
+        'sign_index' => ['.s-result-item', 'data-index'],
+        'url' => array('h2>a','href'),
     ])
     ->queryData();
 
