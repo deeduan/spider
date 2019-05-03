@@ -1,13 +1,19 @@
 <?php
+ini_set('memory_limit', '256M');
 
+require_once '../vendor/autoload.php';
 require_once './curl.php';
 require_once './phpexcel.php';
 require_once './index.php';
 
-$pq = new UCurl();
+// findPosition
 
+//$pq = new UCurl();
+//$response = file_get_contents("./amazon.html", 'r');
+//$pq->findPosition('B07FFWGW2L', $response);
+//
+//die;
 // 要计算的所有文件
-
 $files = HandleFile::files(__DIR__."/excel");
 
 
@@ -35,7 +41,6 @@ foreach ($files as $file_name) {
 }
 
 
-
 //$url = "https://www.amazon.com/s?k=sound+machine+for+sleeping&page=1&ref=sr_pg_1";
 //$page = 1;
 
@@ -58,21 +63,24 @@ foreach ($excels as $file_name => $excel) {
     // 循环关键词
     foreach ($keywords as $key => $keyword) {
         try {
+            $pq = new UCurl();
             // 循环20此来执行
             for ($i = 1; $i < 21; $i++) {
                 $keyword = str_replace(' ', '+', trim($keyword));
                 $url = "https://www.amazon.com/s?k={$keyword}&page={$i}&ref=sr_pg_{$i}";
                 $pq->init($asin, $i, $url);
+                var_dump("执行下一个\n");
+                if ($i < 5) {
+                    sleep(8);
+                } else {
+                    sleep(5);
+                }
             }
-
-            // 虚拟测试
-//            $response = file_get_contents('./amazon.html');
-//            $pq->test($response);
-
 
             // 获取结果
             $res = $pq->getRange();
 
+			// var_dump($res);
             // 获取关键字的对应数据
             $data['ad_range'][]      = $res['ad_range']['content'];
             $data['ad_range_page'][] = $res['ad_range']['url'];
@@ -80,6 +88,12 @@ foreach ($excels as $file_name => $excel) {
             $data['na_range_page'][] = $res['na_range']['url'];
 
         } catch (Exception $e) {
+            // 模拟无数据 - 占位
+            $data['ad_range'][]      = '无';
+            $data['ad_range_page'][] = '无';
+            $data['na_range'][]      = '无';
+            $data['na_range_page'][] = '无';
+            var_dump($e->getMessage());
             echo "--------------------\n";
             echo "计算失败,请联系段狼~~ \n";
             echo "计算失败,请联系段狼~~ \n";
@@ -89,7 +103,6 @@ foreach ($excels as $file_name => $excel) {
     }
 
     // 批量写入excel
-    $end_line = $key + 1;
     $excel->setAdRange($data['ad_range']);
     $excel->setAdUrl($data['ad_range_page']);
     $excel->setNaturalRange($data['na_range']);

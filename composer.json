@@ -1,6 +1,7 @@
 {
     "require": {
         "jaeger/querylist": "^4.1",
-        "phpoffice/phpspreadsheet": "^1.6"
+        "phpoffice/phpspreadsheet": "^1.6",
+      "ext-curl": "*"
     }
 }

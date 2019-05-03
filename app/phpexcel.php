@@ -10,7 +10,6 @@ class UExcel
     public function __construct($file_name)
     {
         $this->spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($file_name);
-        require_once '../vendor/autoload.php';
     }
 
     /**

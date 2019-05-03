@@ -30,6 +30,7 @@ class UCurl
      * @var int
      */
     protected $position = -1;
+    protected $naturalPosition = -1;
 
     /**
      * HEADER 头信息
@@ -50,7 +51,7 @@ class UCurl
      * COOKIE
      */
     const U_COOKIE = [
-        'Cookie: sid="peRazBil/ugGvj3sGx+1kg==|e1FPNg5S+E9vzZQnFxTlnxCAqjpKst+iAdG3KLiF9EU="; session-id=147-7017642-9858907; ubid-main=133-4345625-3062038; x-wl-uid=1nPnAXxkfDtp1ZP5vEQmwCD980wlJ+irpeoIRwjUUMX2+3Kwe96Akz98EHsX2eRFt6Jqie5uTDBV1qQb3AFL8fetG1HOyaf+2fXWz4aRR/Kiojj4u9EIjj+5CudlwR7c15uLk8b/2gwU=; s_pers=%20s_fid%3D308488E7D9A67932-0B819A5271DDB5F1%7C1701665837362%3B%20s_dl%3D1%7C1543901237364%3B%20gpv_page%3DUS%253AAS%253ASP-overview2%7C1543901237366%3B%20s_ev15%3D%255B%255B%2527ELUSSP-images-na.ssl-images-amazon.com%2527%252C%25271543899437373%2527%255D%255D%7C1701665837373%3B; i18n-prefs=USD; s_nr=1553744019018-Repeat; s_vnum=1982041274907%26vn%3D7; s_dslv=1553744019020; x-amz-captcha-1=1556453977579675; x-amz-captcha-2=Uarn5Lx5vXUsCsOHvooJHw==; session-id-time=2082787201l; at-main=Atza|IwEBIAWZI-HxcDEZPItEFJQ85igABohO8N1dPwsnAqbAuFazWy6wwK4Yna5SuUdiSpB0n0miuHsUSBrtuXss05_HPmaY5LlGUfL_vz0uWJdPZsCn6MNKisgv7aMfadupVNPRU1u1as6VHlybt_sc3xVoM2OlxypTSfvSjQ3kNh9lNfHcHyAJIKabsuyBskUZNm8ncXnyfG1JE5A3LUrDY7BtGeEKlTwY6PtNgoFhq4yz330Fk-0JqFo0AYV5V6G4N1eDA8poFYUc-4caDNgYk_MN3kFjMln5lXorsGAQQt5XJf90C0-Faase9p5lUjW-PlCVmdAvmrfdFPz5nnBYx-MhHHTs9LWSA1JPh8voM4Mzm548TwAiGxmR9QGB5F5cUJ88WQC_gLS5xrfYOV6VZaoKqz9_eUjidjf1n_xxLEzx8_YGcg; sess-at-main="Hx39TDm+5Qc1J0mAUTnFqLiS3wbTDR9oM1W78kA3BWA="; sst-main=Sst1|PQGGHhDSFGYHu3le48QwjRfAC9BbYfIchrU7Jbgz1MzKS72HBNSgkgFlgvWPWWPoE91STka3rpXB4MABvQvUf7CyKOsBblF6D2Ryz5JKP3fVTEQ0o1WlLIj8Kvcl6lzE69lvfev5Fj89IBWPY4nJQ5F3ZruOrj1D5s8xGNWYvWjZhZat1kvEmHo9J7YJJJvBWxb1X_HQIxijvruOhGNCXB_NQRlS5wxdkRIFmDC4a6kT6DR8xfQEEd_dpBgCM4jHbSqw1u_BhtQPdeaBuyHqRhZ0HSdg8_N0WP0COPUdcstz3niEgHbQ48LdiFBJOcfmr7qlIccgavs40HT6Oe9_3r7FsA; x-main="gyYy2xi4CiqeiI8OjRf3prCwtCOW39jo2NEN99sw2@RKsR7JI0KXBD@0lwDfsgBC"; session-token=KORWg6nRp6QsdjZ5/g2lzLHhm8syHPcZ+IZjNjiRVhWUAlOhkcUMsQ+LnoQDGragjqXKPsR8ByzB/HSIFf9euG7eq2e4sabGXD0sf0WjahdHqX774ux9VA1yfVZJ3B6OmDk3GgvcbSsq/AWwFH2ndZYm0X6EprNrHtFqL7MjhQrSxYUsYSqK8WarcbYbmeovCoyWcq62mHcn3yYf0vENDB3SaNXktbmdNRGpyR/MH1gbGE0hLSR8/sKxeVEfLbC41b+io8HIdZGs3w18u3gSgQ==; skin=noskin; csm-hit=tb:1BKFH2GGPH64P7BTEGQ6+s-CE0QBWRFFFEXMT23RPY6|1556772172495&t:1556772172495&adb:adblk_no'
+		'Cookie: sid="peRazBil/ugGvj3sGx+1kg==|e1FPNg5S+E9vzZQnFxTlnxCAqjpKst+iAdG3KLiF9EU="; session-id=147-7017642-9858907; ubid-main=133-4345625-3062038; x-wl-uid=1nPnAXxkfDtp1ZP5vEQmwCD980wlJ+irpeoIRwjUUMX2+3Kwe96Akz98EHsX2eRFt6Jqie5uTDBV1qQb3AFL8fetG1HOyaf+2fXWz4aRR/Kiojj4u9EIjj+5CudlwR7c15uLk8b/2gwU=; s_pers=%20s_fid%3D308488E7D9A67932-0B819A5271DDB5F1%7C1701665837362%3B%20s_dl%3D1%7C1543901237364%3B%20gpv_page%3DUS%253AAS%253ASP-overview2%7C1543901237366%3B%20s_ev15%3D%255B%255B%2527ELUSSP-images-na.ssl-images-amazon.com%2527%252C%25271543899437373%2527%255D%255D%7C1701665837373%3B; i18n-prefs=USD; s_nr=1553744019018-Repeat; s_vnum=1982041274907%26vn%3D7; s_dslv=1553744019020; x-amz-captcha-1=1556453977579675; x-amz-captcha-2=Uarn5Lx5vXUsCsOHvooJHw==; session-id-time=2082787201l; at-main=Atza|IwEBIGHR8nGvCXHv0wrZRIhcXeBkuNLs7Aoj8thanjI7qit0ZQS6FiY-xKZT2C18WSIv2mUyUBZazCPmSPNrHBlKNShRiSeB6vYJGrT1Tvx8W-vQxWy9lzs36DVie3GgjOZOCiwhLjnM1iHpnDWu769aR0lMSD4lmBCX-9aDRuS5VFHpuyKkdMviPdGV8BdePqCmnXotE39Z29ZvMdGET68CYABWGtuv-DEYtWNi7NosWdHmE1HBQs4edinqIGS3hD9acWN3pnvMSZaB6LN-o6bxwGvvk33yM-nkQrxx4L4JFt3LzM22s1XKTJ_QxYr8ITe9aByUy77HLsu5yXHvFaupBF_CbVrF0kcyWE9XmsJWJqpoDe9UvT22exwWLocTUBZ06G4-nDvSNdAE9SXgHltptoBMs3aKBjGihURFbSVvMPWhMA; sess-at-main="bmIzmRwfQoxC4WZLif7Nl9SrSvpwVqBFp+64Hyi/G48="; sst-main=Sst1|PQENlEH-azttRtVJDyjtewwWCxEua7SNmF_yK-amMBWLJk54KxJZGWPTcuibWN8pbUkG7UxHioba_16_hxd9rAokeNkSOUUtOw6bycIgaTQtjeuv1GuuviCDJQSwislxb6D1zBiJHCV9xmbvFK8pV1JTXGpRs39INmZSN4CuyasDT9GFTWXbjxHt7eJVzfnmEGVp2ydBHzv7j3u7QU-wRknP2Mp8nMWBpHERocv3SWQlabkoi9i0cLdAXobw1dvwalIYGh_zr7p7tTfmhtl4IeOY9Sr6dpmb0dIPiDY4UHa3XoR0oyBfGsa1KM11---8NU0kLYxYdX-UfPdiImO9UbNzBw; x-main="X0BsqL0YOmHRm7eX9LlRqckCDmlETSkG3pwmRrB0Tks@6hRPKxqqbQ1wPzyR5pVf"; session-token=O9LStX3i3Upi28g3M92ctEg0pT5zK5a1n0DZh/QgsULUDTkiSeZdyzNUoVKLCshgXm1BkCwno5uGJLssdPM602Ghu8LSSHpp7d6gcz+A/d2iJ+48yLOOQmbs+7mxlpDz0/8uy4vMoGLaTT18LOeLvxnIbxuC/OmwbHzZEC8O+eeXwkJd28TaJZoobyWo3GTBf+gqteiyfnmFNM8By0zy/4UUjluKYyxNecc/BOPShaIPdgmVFcrPxMXl75bZMTyi1NNg/2/sHDQYJDhSr4TORQ==; csm-hit=tb:VDDXZ4MFEW36QQ4D62WQ+s-8NVT9NKX7TRH1EFNEZMT|1556886874324&t:1556886874324&adb:adblk_no',
     ];
 
     /**
@@ -100,7 +101,6 @@ class UCurl
     {
         // 1、设置时区为洛杉矶时区
         ini_set('date.timezone', 'America/Los_Angeles');
-        require_once '../vendor/autoload.php';
         $this->curl = curl_init();
         $this->setDefaultOptions();
     }
@@ -117,7 +117,7 @@ class UCurl
             CURLOPT_RETURNTRANSFER  => true,
             CURLOPT_ENCODING        => "",
             CURLOPT_MAXREDIRS       => 10,
-            CURLOPT_TIMEOUT         => 30,
+            CURLOPT_TIMEOUT         => 60,
             CURLOPT_HTTP_VERSION    => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST   => "GET",
             CURLOPT_POSTFIELDS      => "",
@@ -133,11 +133,7 @@ class UCurl
      */
     public function setUrlOptions($url = '')
     {
-        $header = [
-            CURLOPT_URL => $url,
-        ];
-
-        curl_setopt_array($this->curl, $header);
+        curl_setopt($this->curl, CURLOPT_URL, $url);
     }
 
     /**
@@ -158,19 +154,29 @@ class UCurl
         $this->asinPattern($asin);
 
         // 抓取网页 - 失败抛出异常
+
+        var_dump(date("Y-m-d H:i:s", time()));
+
         $this->setUrlOptions($url);
         $response = curl_exec($this->curl);
+
+       // file_put_contents("./res/res_{$page}.html", $response);
+        var_dump(date("Y-m-d H:i:s", time()));
+
+        $http_status = curl_getinfo($this->curl, CURLINFO_HTTP_CODE);
+        var_dump("状态码:    {$http_status}\n");
+
         $err      = curl_error($this->curl);
-        curl_close($this->curl);
         if ($err) {
-            throw new Exception('CURL ERR: '.$err);
+			file_put_contents('./err.log', json_encode($err)."\n", FILE_APPEND);
+           // throw new Exception('段狼 CURL ERR: '.$err);
         }
 
         // 获取抓取到的网页phpQuery对象
-        $this->phpQuery($response);
+//        $this->phpQuery($response);
 
         // 获取所在位置
-        $this->position = $this->findPosition();
+        $this->findPosition($asin, $response);
 
         // 1、自然排名
         if ($this->naturalRange === -1) {
@@ -178,11 +184,7 @@ class UCurl
             $this->naturalUrl = $url;
             $this->naturalRange = $this->naturalRange($page);
         }
-        // 2、常规排名
-        if ($this->normalRange === -1) {
-            $this->normalRangePage = $page;
-            $this->normalRange = $this->normalRange();
-        }
+
         // 3、广告排名
         if ($this->adRange === -1) {
             $this->adRangePage = $page;
@@ -190,42 +192,18 @@ class UCurl
             $this->adRange = $this->adRange($page);
         }
 
+        $this->resetOptions();
         // 还需要继续执行
         return false;
     }
 
     /**
-     * 获取测试结果
-     *
-     * @param $response
+     * 重置curl选项
      */
-    public function test($response)
+    public function resetOptions()
     {
-        $this->asinPattern('B07FFWGW2L');
-
-        // 获取抓取到的网页phpQuery对象
-        $this->phpQuery($response);
-
-        // 获取所在位置
-        $this->position = $this->findPosition();
-
-        // 1、自然排名
-        if ($this->naturalRange === -1) {
-            $this->naturalRangePage = 1;
-            $this->naturalUrl = "https://www.amazon.com/s?k=sound+machine+for+sleeping&page=1&ref=sr_pg_1";
-            $this->naturalRange = $this->naturalRange(1);
-        }
-        // 2、常规排名
-        if ($this->normalRange === -1) {
-            $this->normalRangePage = 1;
-            $this->normalRange = $this->normalRange();
-        }
-        // 3、广告排名
-        if ($this->adRange === -1) {
-            $this->adRangePage = 1;
-            $this->adUrl = "https://www.amazon.com/s?k=sound+machine+for+sleeping&page=1&ref=sr_pg_1";
-            $this->adRange = $this->adRange(1);
-        }
+        curl_reset($this->curl);
+        $this->setDefaultOptions();
     }
 
     /**
@@ -249,18 +227,42 @@ class UCurl
 
     /**
      * 获取位置
-     *
+     *    // $position = $this->pq->find($this->pattern)->attr('data-index');
      * @return int
      */
-    public function findPosition()
+    public function findPosition($asin, $response)
     {
-        $position = $this->pq->find($this->pattern)->attr('data-index');
+        // 1、获取索引
+        // 2、检查所有是否含有广告标识
+        // 3、含有 - 广告索引
+        // 4、不含有 常规索引
+		$pattern = '/data-asin="'.$asin.'" data-index="(\d+)"/';
 
-        if (empty($position) && $position != 0) {
-            return -1;
+		preg_match_all($pattern, $response, $matches);
+
+        $match = $matches[1];
+        if (empty($match)) {
+            return false;
         }
 
-        return intval($position);
+        // 生成查询对象
+        $this->phpQuery($response);
+        $pattern = 'span.a-color-secondary';
+        $rules = [
+            'ad' => [$pattern, 'text']
+        ];
+        foreach ($match as $position) {
+            // 检查当前位置是否含有广告标识
+            $range = 'div[data-index="'.$position.'"]';
+            $res = $this->pq->rules($rules)->range($range)->queryData();
+
+            // 是广告索引
+            if (!empty($res[0]['ad'])) {
+                $this->position = $position;
+            } else {
+                $this->naturalPosition = $position;
+            }
+        }
     }
 
     /**
@@ -271,7 +273,7 @@ class UCurl
      */
     public function naturalRange($page)
     {
-        $position = $this->position;
+        $position = $this->naturalPosition;
 
         $data = [];
         for ($i = 0; $i < 60; $i++) {
@@ -318,11 +320,11 @@ class UCurl
      */
     public function normalRange()
     {
-        if ($this->position === -1) {
+        if ($this->naturalPosition === -1) {
             return -1;
         }
 
-        return $this->position + 1;
+        return $this->naturalPosition + 1;
     }
 
 
@@ -359,6 +361,11 @@ class UCurl
         return $data;
     }
 
-
+    public function __destruct()
+    {
+        // 写日志
+        // var_dump("析构函数被调用\n");
+        curl_close($this->curl);
+    }
 
 }
