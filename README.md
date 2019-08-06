@@ -1,2 +1,2 @@
 # spider
-xiaopang spider
+给小胖写了个简单的定向抓取亚马逊产品蜘蛛
